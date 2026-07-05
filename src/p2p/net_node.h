@@ -293,11 +293,11 @@ namespace nodetool
     virtual void clear_used_stripe_peers();
 
   private:
+    // Pas de DNS seed Monero : elles resolvent vers des nodes Monero qui rejettent TAR
+    // (network_id different). Le node s'appuie sur le seed IP en dur (get_ip_seed_nodes)
+    // et l'echange de pairs. Ajouter ici un DNS seed TAR quand il en existera un.
     const std::vector<std::string> m_seed_nodes_list =
-    { "seeds.moneroseeds.se"
-    , "seeds.moneroseeds.ae.org"
-    , "seeds.moneroseeds.ch"
-    , "seeds.moneroseeds.li"
+    {
     };
 
     bool islimitup=false;

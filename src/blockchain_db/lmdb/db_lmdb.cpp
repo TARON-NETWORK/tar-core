@@ -1445,7 +1445,11 @@ void BlockchainLMDB::open(const std::string& filename, const int db_flags)
   if (db_flags & DBF_FASTEST)
     mdb_flags |= MDB_NOSYNC | MDB_WRITEMAP | MDB_MAPASYNC;
   if (db_flags & DBF_RDONLY)
-    mdb_flags = MDB_RDONLY;
+    // MDB_NOLOCK : un lecteur externe read-only (ex: l'explorer xmrblocks dans un autre
+    // conteneur) n'utilise pas la table de lecteurs (mutex robuste partage), qui echoue
+    // entre namespaces PID Docker (EAGAIN). N'affecte que l'ouverture read-only ; le
+    // daemon ouvre en ecriture et n'emprunte jamais ce chemin.
+    mdb_flags = MDB_RDONLY | MDB_NOLOCK;
   if (db_flags & DBF_SALVAGE)
     mdb_flags |= MDB_PREVSNAPSHOT;
 

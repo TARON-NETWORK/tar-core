@@ -691,31 +691,21 @@ namespace nodetool
     std::set<std::string> full_addrs;
     if (m_nettype == cryptonote::TESTNET)
     {
-      full_addrs.insert("176.9.0.187:28080");
-      full_addrs.insert("192.99.8.110:28080");
-      full_addrs.insert("37.187.74.171:28080");
-      full_addrs.insert("88.99.195.15:28080");
-      full_addrs.insert("5.104.84.64:28080");
+      // TAR n'a pas de testnet public : pas de seeds Monero ici.
     }
     else if (m_nettype == cryptonote::STAGENET)
     {
-      full_addrs.insert("176.9.0.187:38080");
-      full_addrs.insert("192.99.8.110:38080");
-      full_addrs.insert("37.187.74.171:38080");
-      full_addrs.insert("88.99.195.15:38080");
-      full_addrs.insert("5.104.84.64:38080");
+      // TAR n'a pas de stagenet public : pas de seeds Monero ici.
     }
     else if (m_nettype == cryptonote::FAKECHAIN)
     {
     }
     else
     {
-      full_addrs.insert("176.9.0.187:18080");
-      full_addrs.insert("88.198.163.90:18080");
-      full_addrs.insert("192.99.8.110:18080");
-      full_addrs.insert("37.187.74.171:18080");
-      full_addrs.insert("88.99.195.15:18080");
-      full_addrs.insert("5.104.84.64:18080");
+      // TAR mainnet seed node(s). Remplace les IPs Monero historiques : un node frais
+      // se connecte directement au reseau TAR au lieu de tenter (et se faire rejeter par)
+      // les seeds Monero. Ajouter d'autres seeds ici quand le reseau grandit.
+      full_addrs.insert("89.116.27.24:19080");
     }
     return full_addrs;
   }
