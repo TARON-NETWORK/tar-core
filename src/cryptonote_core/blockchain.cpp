@@ -5450,7 +5450,12 @@ void Blockchain::cancel()
 static const char expected_block_hashes_hash[] = "2aea941d43024422a63f223c84b9d88d1f58d31e1f508c2d6d43cd637ba32d16";
 void Blockchain::load_compiled_in_block_hashes(const GetCheckpointsCallback& get_checkpoints)
 {
-  if (get_checkpoints == nullptr || !m_fast_sync)
+  // TAR: on desactive le fast-sync par hachages de blocs precompiles. blocks.dat est herite
+  // de la mainnet Monero (mauvaise chaine) : prevalidate_block_hashes compare des blocs TAR a
+  // des hachages Monero, le compteur "usable" underflow et l'assert "usable is negative" fait
+  // echouer en boucle la synchronisation de tout nouveau node. La validation complete des blocs
+  // (PoW comprise) prend le relais, instantanee sur une petite chaine.
+  if (true || get_checkpoints == nullptr || !m_fast_sync)
   {
     return;
   }
